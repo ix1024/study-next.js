@@ -1,0 +1,38 @@
+{
+  "name": "study-next.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lengjh/study-next.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lengjh/study-next.js/issues"
+  },
+  "homepage": "https://github.com/lengjh/study-next.js#readme",
+  "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.18.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "kwsak": "^1.0.4",
+    "next": "^7.0.2",
+    "node-sass": "^4.10.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "cross-env": "^5.2.0"
+  }
+}

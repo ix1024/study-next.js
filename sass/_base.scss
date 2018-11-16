@@ -1,0 +1,21 @@
+@import './variable';
+
+html {
+    color: $fontColor;
+    font-size: $fontDefaultSize;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.clearfix {
+    zoom: 1;
+
+    &::after {
+        content: ' ';
+        clear: both;
+        height: 0;
+        overflow: hidden;
+    }
+}
