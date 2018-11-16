@@ -1,3 +1,8 @@
 $fontDefaultSize:14px;
 $fontFamily:Arail;
 $fontColor:#333;
+
+//适配基准数
+$base-fonts-default: 100px; 
+$max-container: 750px;
+$responsives:320px,360px, 375px, 384px, 393px,414px, 480px,540, 640px,720px,750px;  // 屏幕断点

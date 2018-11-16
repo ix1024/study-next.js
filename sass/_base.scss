@@ -1,8 +1,36 @@
 @import './variable';
+@import './mixin';
+
+
+@each $responsive in $responsives {
+    @if $responsive==320px {
+        @media only screen and (min-width: #{$responsive}) {
+            html {
+                font-size: 50px;
+            }
+
+            body {
+                font-size: 12px;
+            }
+        }
+    }
+
+    @else {
+        @media only screen and (min-width: #{$responsive}) {
+            html {
+                @include fz($responsive);
+            }
+
+            body {
+                font-size: ($responsive * $base-fonts-default / $max-container)*0.24;
+            }
+        }
+    }
+}
+
 
 html {
     color: $fontColor;
-    font-size: $fontDefaultSize;
 }
 
 * {

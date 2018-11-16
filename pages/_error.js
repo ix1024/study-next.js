@@ -1,5 +1,5 @@
 import React from 'react'
-import MyError from "../components/error";
+import MyError from "../components/Error";
 
 export default class Page extends React.Component {
     static async getInitialProps({ res, err }) {

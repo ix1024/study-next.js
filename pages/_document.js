@@ -19,6 +19,7 @@ export default class AppDocument extends Document {
                     <meta httpEquiv="description" content={site.description} />
                     <meta httpEquiv="keywords" content={site.keywords} />
                     <link rel="stylesheet" type="text/css" href="//unpkg.com/antd-mobile@2.0.0-beta.6/dist/antd-mobile.min.css" />
+                    <link rel="stylesheet" type="text/css" href="//idangero.us/swiper/dist/css/swiper.min.css" />
                 </Head>
                 <body>
                     <Main />
