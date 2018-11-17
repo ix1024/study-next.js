@@ -43,8 +43,7 @@ export default class extends React.Component {
 
         return (
             <div className='list'>
-                <Home></Home>
-                <Link href="/about" >Link</Link>
+                
                 {
                     data.modules.map((item, index) => (
                         <Module data={item} key={index} />

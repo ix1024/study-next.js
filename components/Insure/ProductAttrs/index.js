@@ -5,16 +5,12 @@ import FormType from "../FormType";
 export default class ProductAttrs extends Component {
     constructor(props) {
         super(props)
-        console.log(props)
     }
     render() {
         const { data, moneyKeyboardWrapProps } = this.props
 
         return (
-            <div>
-                <h3>{data.attributeId}</h3>
-                <FormType data={data} />
-            </div>
+            <FormType data={data} />
         )
 
     }
