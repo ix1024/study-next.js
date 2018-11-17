@@ -1,30 +1,25 @@
-import kwsak from 'kwsak'
-import axios from 'axios'
-import React from 'react'
-import Head from 'next/head'
-import Router from 'next/router'
-import config, { api } from "../config"
-import Modal from '../components/modal'
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import 'isomorphic-unfetch'
+import kwsak from 'kwsak'
+import config, { api } from "../config"
+import insureApp from "../reducers"
+import Insure from "../components/Insure";
 import './index.scss'
-import Link from 'next/link'
-import Home from '../components/Home'
-import Module from "../components/Insure/Module";
 
-import insure from "../data/insure.json";
+const store = createStore(insureApp)
 
-
-export default class extends React.Component {
-    static async getInitialProps({ req }) {
-
+export default class extends Component {
+    static async getInitialProps() {
         // const res = await fetch('')
         // const json = await res.json()
         // const data = res.data;
         //kwsak.clear();
         //console.log(json); 
-        console.log(config);
+        // console.log(config);
         return {
-            data: insure.result
+            // data: insure.result
         }
     }
 
@@ -39,17 +34,11 @@ export default class extends React.Component {
 
 
     render() {
-        const { url, photos, userAgent, data } = this.props
-
         return (
-            <div className='list'>
-                
-                {
-                    data.modules.map((item, index) => (
-                        <Module data={item} key={index} />
-                    ))
-                }
-
+            <div>
+                <Provider store={store}>
+                    <Insure></Insure>
+                </Provider>
             </div>
         )
     }

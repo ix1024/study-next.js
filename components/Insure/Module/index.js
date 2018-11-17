@@ -14,21 +14,21 @@ class Module extends Component {
     render() {
         const { data } = this.props
         let checked = false
-        const { getFieldProps } = this.props.form;
+        const { getFieldProps, key } = this.props.form;
         return (
-            <div>
+            <div className="moduel-item">
                 <WhiteSpace />
                 <h3>{data.name}</h3>
 
                 {
-                    data.productAttrs.map((item) => (
-                        <ProductAttrs data={item} />
+                    data.productAttrs.map((item, index) => (
+                        <ProductAttrs data={{ mData: data, item }} key={key + '' + index} />
                     ))
                 }
                 <List
                     renderHeader={() => data.name}
                 >
-                    
+
                     <List.Item
                         extra={<Switch
                             {...getFieldProps('Switch7', {
