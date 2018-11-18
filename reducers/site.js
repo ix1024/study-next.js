@@ -6,7 +6,6 @@ const siteDefault = {
     navBarLeftText: 'Back'
 }
 const site = (state = siteDefault, action) => {
-    console.log(action)
     switch (action.type) {
         case 'SET_TITLE':
             state.title = action.value

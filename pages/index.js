@@ -5,8 +5,10 @@ import 'isomorphic-unfetch'
 import kwsak from 'kwsak'
 import config, { api } from "../config"
 import insureApp from "../reducers"
-import Insure from "../components/Insure";
+import Insure from "../components/Insure"
 import './index.scss'
+
+
 const logger = store => next => action => {
     console.log('dispatching', action)
     let result = next(action)
@@ -19,12 +21,12 @@ const crashReporter = store => next => action => {
         return next(action)
     } catch (err) {
         console.error('Caught an exception!', err)
-        Raven.captureException(err, {
-            extra: {
-                action,
-                state: store.getState()
-            }
-        })
+        // Raven.captureException(err, {
+        //     extra: {
+        //         action,
+        //         state: store.getState()
+        //     }
+        // })
         throw err
     }
 }

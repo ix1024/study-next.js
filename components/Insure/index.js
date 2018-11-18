@@ -39,9 +39,7 @@ class insureApp extends Component {
         }, 1000)
 
         setTimeout(() => {
-            alert(5)
-            console.clear()
-            console.log(_insure.result.modules);
+
 
             let info = insureUtils(this.props.modules, '10-3', function (item) {
                 return item.productAttrs.map((subItem) => {
