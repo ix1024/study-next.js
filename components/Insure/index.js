@@ -4,8 +4,16 @@ import Module from "./Module"
 import NavBar from "../../components/NavBar";
 import insure from "../../data/insure.json"
 import { insureUtils } from "../../utils/insure";
+import { Restricts } from "../../utils/insure/restricts";
 import { setInusreValue, setModules } from "../../action/insure";
 const _insure = { ...insure }
+
+
+const restricts = new Restricts({
+    modules: insure.result.modules,
+    restricts: insure.result.restricts
+});
+
 class insureApp extends Component {
     static async getInitialProps() {
         // const res = await fetch('')
@@ -24,43 +32,7 @@ class insureApp extends Component {
 
     componentDidMount() {
         this.props.setInusreValue(_insure.result)
-        setTimeout(() => {
-            let info = insureUtils(this.props.modules, '10-3', function (item) {
-                return item.productAttrs.map((subItem) => {
-                    if (subItem.attribute.type === 0) {
-                        console.log(subItem.attribute.name, subItem);
-                        subItem.attribute.values = []
-                    }
-                    return subItem
-                })
-            })
-            console.log(info);
-            this.props.setModules(info)
-        }, 1000)
-
-        setTimeout(() => {
-
-
-            let info = insureUtils(this.props.modules, '10-3', function (item) {
-                return item.productAttrs.map((subItem) => {
-                    if (subItem.attribute.type === 0) {
-                        console.log(subItem.attribute.name, subItem);
-                        subItem.attribute.values = [{
-                            "id": 4,
-                            "value": "身份证",
-                            "controlValue": 1,
-                            "attributeId": 3,
-                            "sort": 1,
-                            "deleted": 0,
-                            "isDefault": 0
-                        }]
-                    }
-                    return subItem
-                })
-            })
-            console.log(info);
-            this.props.setModules(info)
-        }, 5000)
+        this.props.setModules(restricts.cale(0));
     }
 
     componentWillUnmount() { }

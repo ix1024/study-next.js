@@ -1,9 +1,10 @@
 import React from 'react'
 import Document, { Head, Main, NextScript } from 'next/document'
 import { site } from "../config";
+
+
 export default class AppDocument extends Document {
     static async getInitialProps() {
-
         return {}
     }
     render() {
@@ -24,7 +25,6 @@ export default class AppDocument extends Document {
                 <body>
                     <Main />
                     <NextScript />
-                    <script src="//res.qixin18.com/dc/pv.js"></script>
                 </body>
             </html>
         )

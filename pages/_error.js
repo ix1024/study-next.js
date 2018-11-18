@@ -8,6 +8,10 @@ export default class Page extends React.Component {
     }
 
     render() {
-        return <MyError statusCode={this.props.statusCode} />
+        return (
+            <div>
+                <MyError statusCode={this.props.statusCode} />
+            </div>
+        )
     }
 }
