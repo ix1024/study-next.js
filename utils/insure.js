@@ -18,5 +18,14 @@ function insureUtils(modules, _id, callback) {
     })
     return modules
 }
-
-export { insureUtils }
+/**
+ * 约束
+ * @param {*} modules 
+ * @param {*} restricts 
+ */
+function restricts(modules, restricts) {
+    restricts.forEach(function (resItem) {
+        const executeType = resItem.executeType;
+    })
+}
+export { insureUtils, restricts }

@@ -25,7 +25,7 @@ class FormType extends Component {
         itemData.attribute.values && itemData.attribute.values.length && itemData.attribute.values.forEach((item) => {
             seasons[0].push({ label: item.value, value: item.controlValue })
         })
-        console.log('seasons', _id, name, seasons)
+        //console.log('seasons', _id, name, seasons)
         let formType = '';
         //文本类型
         if (
