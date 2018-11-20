@@ -10,7 +10,7 @@ const app = next({ dev })
 const handle = app.getRequestHandler()
 //import { api } from "./config";
 //const config = require('./config');
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 app.prepare().then(() => {
     createServer((req, res) => {
         // Be sure to pass `true` as the second argument to `url.parse`.
