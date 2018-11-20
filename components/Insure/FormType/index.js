@@ -1,70 +1,136 @@
 import { connect } from 'react-redux'
 import React, { Component } from "react"
 import { List, InputItem, Picker, DatePicker } from 'antd-mobile'
+import { setModules } from "../../../action/insure";
+import insureData from "../../../data/insure";
+import { setModulesValueById, Restricts } from "../../../utils/insure";
 import { createForm } from 'rc-form'
-import { district, provinceLite } from 'antd-mobile-demo-data'
+import { setTimeout } from 'timers';
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 
 class FormType extends Component {
     constructor(props) {
         super(props)
-        this.state = { date: now };
+        this.state = { date: now, error: false }
+    }
+    onChange(val, id) {
+        console.clear()
+        clearTimeout(this.changeLock)
+        this.changeLock = setTimeout(() => {
+
+            this.props.setModuels(setModulesValueById(this.props.modules, id, val))
+            this.restricts()
+        }, 1000)
+
+    }
+    onBlur() {
+        //console.log(arguments)
+    }
+
+    restricts() {
+        let restricts = new Restricts({
+            modules: this.props.modules,
+            restricts: this.props.restricts
+        })
+
+        this.props.setModuels(restricts.cale(0))
+
+    }
+    componentDidMount() {
+       
     }
     render() {
-        const { data, moneyKeyboardWrapProps } = this.props
-        //console.log(1, this.props)
+
+        const { data, moneyKeyboardWrapProps, error } = this.props
+        //const { getFieldProps } = this.props.form
 
         const itemData = data.item
+        const attribute = itemData.attribute
+        const keyCode = (attribute.keyCode || '').toLowerCase()
+        const regex = attribute.regex
+        const hideItem = attribute.hideItem
+        const defaultValue = attribute.defaultValue
         const mData = data.mData
-        const { getFieldProps } = this.props.form
+
+
         const attributeId = itemData.attributeId
-        let seasons = [[]];
         const _id = mData.id + '-' + attributeId
-        const name = itemData.attribute.name;
+        const name = itemData.attribute.name
+
+        let seasons = [[]]
+
+
+
         itemData.attribute.values && itemData.attribute.values.length && itemData.attribute.values.forEach((item) => {
             seasons[0].push({ label: item.value, value: item.controlValue })
         })
-        //console.log('seasons', _id, name, seasons)
-        let formType = '';
-        //文本类型
-        if (
-            attributeId === 1 ||
-            attributeId === 11 ||
-            attributeId === 26 ||
-            attributeId === 29 ||
-            attributeId === 257 ||
-            attributeId === 258
-        ) {
-            formType = 'InputItem';
-        }
-        //
-        else if (
-            attributeId === 3 ||
-            attributeId === 32 ||
-            attributeId === 14
-        ) {
-            formType = 'Picker';
-        } else if (
-            attributeId === 13 ||
-            attributeId === 259
-        ) {
-            formType = 'DatePicker'
-        } else {
 
+        let formType = ''
+        let inputType = 'text'
+        let inputLength = 50
+        let editable = true
+
+        if (keyCode === 'moblie') {
+            inputType = 'phone'
+        } else if (keyCode === 'urgencyContactPhone'.toLowerCase()) {
+            inputType = 'phone'
+        }
+
+        switch (itemData.attribute.type) {
+            case 0: //下拉框
+                formType = 'Picker'
+                break
+            case 1: //日历控件
+                formType = 'DatePicker'
+                break
+            case 2: //同时出现下拉框和日历控件区间 ?todo
+                break
+            case 3: //文本框                
+                formType = 'InputItem'
+                break
+            case 4: //地区控件
+                formType = 'Picker'
+                break
+            case 5: //职业控件
+                formType = 'Picker'
+                break
+            case 6: //密码控件
+                inputType = "password"
+                break
+            case 7: //文本?todo
+                formType = 'Text'
+                editable = false
+                break
+            case 8: //对话框                
+                break
+            case 9: //单选
+                formType = 'Picker'
+                break
+            case 10: //多选                
+                break
         }
         switch (formType) {
-
+            case 'Text':
+                return (
+                    <div></div>
+                )
             case 'InputItem':
                 return (
                     <InputItem
-                        type="text"
+                        className={hideItem}
+                        type={inputType}
                         placeholder={attributeId + ' ' + itemData.attribute.defaultRemind}
                         clear
-                        onChange={(v) => { console.log('onChange', v); }}
-                        onBlur={(v) => { console.log('onBlur', v); }}
+                        onChange={(v) => {/** this.onChange(v, _id, this) */ }}
+                        onBlur={(v) => { this.onChange(v, _id, this) }}
                         moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                         _id={_id}
+                        error={error}
+                        editable={editable}
+                        pattern={regex}
+                        defaultValue={defaultValue}
+                        maxLength={inputLength}
                     >{name}</InputItem>
                 )
 
@@ -78,8 +144,8 @@ class FormType extends Component {
                             extra="请选择"
                             _id={_id}
                             key={_id}
-                            value={this.state.sValue}
-                            onChange={v => console.log('onchange', v, this.props.modules)}
+                            value={defaultValue}
+                            onChange={(v) => { this.onChange(v, _id, this, 'picker') }}
                             onOk={v => this.setState({ sValue: v })}
                         >
                             <List.Item arrow="horizontal">{name}</List.Item>
@@ -95,7 +161,7 @@ class FormType extends Component {
                         extra="Optional"
                         _id={_id}
                         value={this.state.date}
-                        onChange={date => this.setState({ date })}
+                        onChange={date => { this.setState({ date }); this.onChange(date, _id, this, 'picker') }}
                     >
                         <List.Item arrow="horizontal">{name}</List.Item>
                     </DatePicker>
@@ -112,6 +178,10 @@ class FormType extends Component {
 }
 const setStateToProps = (state) => {
     const modules = state.insure.modules
-    return { modules }
+    const restricts = state.insure.restricts
+    return { modules, restricts }
 }
-export default connect(setStateToProps)(createForm()(FormType))
+const setDispatchToProps = (dispatch) => {
+    return { setModuels: (value) => { dispatch(setModules(value)) } }
+}
+export default connect(setStateToProps, setDispatchToProps)(createForm()(FormType))
